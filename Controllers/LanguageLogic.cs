@@ -7,6 +7,9 @@ namespace LoremIpsum.Controllers
 {
     internal class LanguageLogic
     {
+        /*internal List<string> GetTranslatedContentText(string pageName, string languageCode)
+        {
 
+        }*/
     }
 }
