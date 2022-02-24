@@ -1,4 +1,5 @@
 ﻿using LoremIpsum.Models;
+using LoremIpsum.Models.ViewModels;
 using LoremIpsum.DAL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -27,9 +28,11 @@ namespace LoremIpsum.Controllers
         public IActionResult Index()
         {
             DBManager dbm = new DBManager(configuration);
-            // 
-            List<string> pageContent = new List<string>() { dbm.GetTranslatedContentText("Frontpage", "WelcomeText", "da-DK") };
-            return View(pageContent);
+
+            PageContentModel pgm = new PageContentModel();
+
+            pgm.Texts = new List<string>() { dbm.GetTranslatedContentText("Frontpage", "WelcomeText", "da-DK") };
+            return View(pgm);
         }
 
 
