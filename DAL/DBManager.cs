@@ -29,6 +29,7 @@ namespace LoremIpsum.DAL
             cmd.Parameters.AddWithValue("@pageName", pageName);
             cmd.Parameters.AddWithValue("@contentName", contentName);
             cmd.Parameters.AddWithValue("@languageCode", languageCode);
+            cmd.Connection = con;
 
             con.Open();
             text = (string)cmd.ExecuteScalar();
