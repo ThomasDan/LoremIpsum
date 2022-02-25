@@ -5,6 +5,10 @@
 }
 
 <div class="text-center">
+    @foreach (LanguageModel languageModel in Model.Languages)
+    {
+        <img src="'Assets\Pictures\' + @languageModel.Code + '.png'"  />
+    }
     <h1 class="display-4">Welcome</h1>
     <p>
         @foreach(LanguageModel lan in Model.Languages)
