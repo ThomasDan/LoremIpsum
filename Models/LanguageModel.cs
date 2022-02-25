@@ -15,7 +15,7 @@ namespace LoremIpsum.Models
 
         public string GetImagePath()
         {
-            return "~\\Assets\\Pictures\\" + this.Code + ".png";
+            return "~/Assets/Pictures/" + this.Code + ".png";
         }
     }
 }

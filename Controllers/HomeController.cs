@@ -37,7 +37,7 @@ namespace LoremIpsum.Controllers
             if (HttpContext.Session.GetString("Language") == "" || HttpContext.Session.GetString("Language") == null)
             {
                 language = HttpContext.Request.Headers["Accept-Language"].ToString().Split(',')[0];
-                HttpContext.Session.SetString("Language", language);
+                HttpContext.Session.SetString("Language", pgm.Languages.Any(l => l.Code.Equals(language)) ? language : "en-UK");
             }
 
 
