@@ -75,7 +75,7 @@ namespace LoremIpsum.DAL
 
 
             SqlConnection con = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand(@"SELECT name, code FROM Languages");
+            SqlCommand cmd = new SqlCommand(@"SELECT name, code FROM Language");
             cmd.Connection = con;
 
             con.Open();

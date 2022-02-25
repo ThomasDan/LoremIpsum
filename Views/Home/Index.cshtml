@@ -6,5 +6,10 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p> @*Model.Contents.First().Text*@ </p>
+    <p>
+        @foreach(LanguageModel lan in Model.Languages)
+        {
+        <label>@lan.Code</label>
+        }
+    </p>
 </div>
