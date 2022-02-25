@@ -45,7 +45,7 @@ namespace LoremIpsum.DAL
             
 
             SqlConnection con = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand(@"SELECT text, Content.name FROM Translation 
+            SqlCommand cmd = new SqlCommand(@"SELECT text, Content.name AS contentname FROM Translation 
                                                 JOIN Content ON translation.contentID = Content.id
                                                 JOIN Page ON Content.pageID = Page.id
                                                 WHERE Page.name = @pageName AND Translation.languageCode = @languageCode
@@ -59,7 +59,7 @@ namespace LoremIpsum.DAL
             while (reader.Read())
             {
                 content.Add(new ContentTextModel(
-                    reader["Content.name"].ToString(),
+                    reader["contentname"].ToString(),
                     reader["text"].ToString()
                     ));
             }
