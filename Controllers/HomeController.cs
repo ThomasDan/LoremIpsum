@@ -58,7 +58,7 @@ namespace LoremIpsum.Controllers
         public IActionResult SelectLanguage(string language)
         {
             HttpContext.Session.SetString("Language", language);
-            return Index();
+            return RedirectToAction("Index");
         }
     }
 }
