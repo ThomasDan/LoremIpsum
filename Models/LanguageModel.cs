@@ -12,5 +12,10 @@ namespace LoremIpsum.Models
 
         public LanguageModel() { }
         public LanguageModel(string name, string code) { Name = name;Code = code; }
+
+        public string GetImagePath()
+        {
+            return "Assets\\Pictures\\" + this.Code + ".png";
+        }
     }
 }
