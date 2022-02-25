@@ -1,15 +1,21 @@
 ﻿@model LoremIpsum.Models.ViewModels.PageContentModel
-
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor httpContextAccessor;
 @{
     ViewData["Title"] = "Lorem Ipsum";
 }
 
 <div class="text-center">
-    @foreach (LanguageModel languageModel in Model.Languages)
+    @using (Html.BeginForm("SelectLanguage", "Home"))
     {
-        <img width="150" height="150" style="border-radius:75px; border:black solid 3px;" src="@languageModel.ImageURL" />
+        @foreach (LanguageModel languageModel in Model.Languages)
+        {
+            <button type="submit" name="language" value="@languageModel.Code">
+                <img width="150" height="150" style="border-radius:75px; border:black solid 3px;" src="@languageModel.ImageURL" />
+            </button>
+        }
     }
-    <h1 class="display-4">@Model.Contents.First().Text</h1> <!--.First(c => c.Name.Equals("MainTitle"))-->
+    <h1 class="display-4">@Model.Contents.First().Text</h1> <!-- @Model.Contents.First().Name  -->
     <p>
         @Model.Contents.First(c => c.Name.Equals("WelcomeText")).Text
     </p>

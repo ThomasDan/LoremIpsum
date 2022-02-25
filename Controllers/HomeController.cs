@@ -34,13 +34,17 @@ namespace LoremIpsum.Controllers
             pgm.Languages = dbm.GetAllLanguages();
             string language = "";
 
-            if (HttpContext.Session.GetString("Language") == "" || HttpContext.Session.GetString("Language") == null)
+            if (HttpContext.Session.GetString("Language") == "" || HttpContext.Session.GetString("Language") == null || !pgm.Languages.Any(l => l.Code.Equals(HttpContext.Session.GetString("Language"))))
             {
+                // Setting up the Language session string
                 language = HttpContext.Request.Headers["Accept-Language"].ToString().Split(',')[0];
                 HttpContext.Session.SetString("Language", pgm.Languages.Any(l => l.Code.Equals(language)) ? language : "en-UK");
             }
+            
+            language = HttpContext.Session.GetString("Language");
+            
 
-            pgm.Contents = dbm.GetAllTranslatedPageContent("Frontpage", "da-DK");
+            pgm.Contents = dbm.GetAllTranslatedPageContent("Frontpage", language);
             return View(pgm);
         }
 
@@ -49,6 +53,12 @@ namespace LoremIpsum.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult SelectLanguage(string language)
+        {
+            HttpContext.Session.SetString("Language", language);
+            return Index();
         }
     }
 }
