@@ -4,11 +4,13 @@ using LoremIpsum.DAL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace LoremIpsum.Controllers
 {
@@ -16,22 +18,27 @@ namespace LoremIpsum.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IConfiguration configuration;
-        private LanguageLogic ll;
 
         public HomeController(IConfiguration _configuration, ILogger<HomeController> logger)
         {
             this.configuration = _configuration;
-            this.ll = new LanguageLogic();
             _logger = logger;
         }
 
         public IActionResult Index()
         {
+            string language = "";
+
+            if (HttpContext.Session.GetString("Language") == "" || HttpContext.Session.GetString("Language") == null)
+            {
+                language = HttpContext.Request.Headers["Accept-Language"];
+                HttpContext.Session.SetString("Language", language);
+            }
+
             DBManager dbm = new DBManager(configuration);
 
             PageContentModel pgm = new PageContentModel();
-
-            pgm.Texts = new List<string>() { dbm.GetTranslatedContentText("Frontpage", "WelcomeText", "da-DK") };
+            pgm.Contents = dbm.GetAllTranslatedPageContent("Frontpage", language);
             return View(pgm);
         }
 
