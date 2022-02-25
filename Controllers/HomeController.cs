@@ -27,6 +27,11 @@ namespace LoremIpsum.Controllers
 
         public IActionResult Index()
         {
+            DBManager dbm = new DBManager(configuration);
+
+            PageContentModel pgm = new PageContentModel();
+
+            pgm.Languages = dbm.GetAllLanguages();
             string language = "";
 
             if (HttpContext.Session.GetString("Language") == "" || HttpContext.Session.GetString("Language") == null)
@@ -35,9 +40,7 @@ namespace LoremIpsum.Controllers
                 HttpContext.Session.SetString("Language", language);
             }
 
-            DBManager dbm = new DBManager(configuration);
 
-            PageContentModel pgm = new PageContentModel();
             pgm.Contents = dbm.GetAllTranslatedPageContent("Frontpage", language);
             pgm.Languages = dbm.GetAllLanguages();
             return View(pgm);
