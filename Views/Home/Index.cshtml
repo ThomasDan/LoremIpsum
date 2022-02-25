@@ -7,13 +7,10 @@
 <div class="text-center">
     @foreach (LanguageModel languageModel in Model.Languages)
     {
-        <img width="150" height="150" style="border-radius:75px; border:black solid 3px;" src="https://www.flagshoppen.dk/media/catalog/product/cache/e4d64343b1bc593f1c5348fe05efa4a6/D/a/Dannebrog_Flag_90x150cm__6.jpg" />
+        <img width="150" height="150" style="border-radius:75px; border:black solid 3px;" src="@languageModel.ImageURL" />
     }
-    <h1 class="display-4">Welcome</h1>
+    <h1 class="display-4">@Model.Contents.First().Text</h1> <!--.First(c => c.Name.Equals("MainTitle"))-->
     <p>
-        @foreach(LanguageModel lan in Model.Languages)
-        {
-        <label>@lan.Code</label>
-        }
+        @Model.Contents.First(c => c.Name.Equals("WelcomeText")).Text
     </p>
 </div>

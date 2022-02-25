@@ -9,13 +9,11 @@ namespace LoremIpsum.Models
     {
         public string Name { get; set; }
         public string Code { get; set; }
+        public string ImageURL { get; set; }
 
         public LanguageModel() { }
-        public LanguageModel(string name, string code) { Name = name;Code = code; }
+        public LanguageModel(string name, string code, string imageURL) { Name = name;Code = code; ImageURL = imageURL; }
 
-        public string GetImagePath()
-        {
-            return "~/Assets/Pictures/" + this.Code + ".png";
-        }
+        
     }
 }

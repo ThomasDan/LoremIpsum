@@ -40,9 +40,7 @@ namespace LoremIpsum.Controllers
                 HttpContext.Session.SetString("Language", pgm.Languages.Any(l => l.Code.Equals(language)) ? language : "en-UK");
             }
 
-
-            pgm.Contents = dbm.GetAllTranslatedPageContent("Frontpage", language);
-            pgm.Languages = dbm.GetAllLanguages();
+            pgm.Contents = dbm.GetAllTranslatedPageContent("Frontpage", "da-DK");
             return View(pgm);
         }
 

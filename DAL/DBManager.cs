@@ -18,34 +18,13 @@ namespace LoremIpsum.DAL
             connectionString = configuration.GetConnectionString("DBContext");
         }
 
-        internal ContentTextModel GetTranslatedContentText(string pageName, string contentName, string languageCode)
-        {
-            ContentTextModel text = new ContentTextModel();
-            text.Name = contentName;
-
-            SqlConnection con = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand(@"SELECT text FROM Translation 
-                                                JOIN Content ON translation.contentID = Content.id
-                                                JOIN Page ON Content.pageID = Page.id
-                                                WHERE Page.name = @pageName AND Content.name = @contentName AND Translation.languageCode = @languageCode");
-            cmd.Parameters.AddWithValue("@pageName", pageName);
-            cmd.Parameters.AddWithValue("@contentName", contentName);
-            cmd.Parameters.AddWithValue("@languageCode", languageCode);
-            cmd.Connection = con;
-
-            con.Open();
-            text.Text = (string)cmd.ExecuteScalar();
-            con.Close();
-            return text;
-        }
 
         internal List<ContentTextModel> GetAllTranslatedPageContent(string pageName, string languageCode)
         {
             List<ContentTextModel> content = new List<ContentTextModel>();
-            
 
             SqlConnection con = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand(@"SELECT text, Content.name AS contentname FROM Translation 
+            SqlCommand cmd = new SqlCommand(@"SELECT text, Content.name AS contentName FROM Translation 
                                                 JOIN Content ON translation.contentID = Content.id
                                                 JOIN Page ON Content.pageID = Page.id
                                                 WHERE Page.name = @pageName AND Translation.languageCode = @languageCode
@@ -59,7 +38,7 @@ namespace LoremIpsum.DAL
             while (reader.Read())
             {
                 content.Add(new ContentTextModel(
-                    reader["contentname"].ToString(),
+                    reader["contentName"].ToString(),
                     reader["text"].ToString()
                     ));
             }
@@ -75,7 +54,7 @@ namespace LoremIpsum.DAL
 
 
             SqlConnection con = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand(@"SELECT name, code FROM Language");
+            SqlCommand cmd = new SqlCommand(@"SELECT name, code, imageURL FROM Language");
             cmd.Connection = con;
 
             con.Open();
@@ -84,7 +63,8 @@ namespace LoremIpsum.DAL
             {
                 languages.Add(new LanguageModel(
                     reader["name"].ToString(),
-                    reader["code"].ToString()
+                    reader["code"].ToString(),
+                    reader["imageURL"].ToString()
                     ));
             }
             con.Close();

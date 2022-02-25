@@ -1,4 +1,4 @@
-CREATE DATABASE LoremIpsumDB
+--CREATE DATABASE LoremIpsumDB
 
 USE LoremIpsumDB
 
@@ -6,7 +6,8 @@ DROP TABLE Translation, Content, Page, Language
 
 CREATE TABLE Language(
 	code varchar(5) PRIMARY KEY NOT NULL,
-	name varchar(64) NOT NULL
+	name varchar(64) NOT NULL,
+	imageURL varchar(1024) NOT NULL
 )
 
 CREATE TABLE Page(
